@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Event" ALTER COLUMN "instagram" DROP NOT NULL,
+ALTER COLUMN "whatsApp" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Food" ALTER COLUMN "instagram" DROP NOT NULL,
+ALTER COLUMN "whatsApp" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Hosp" ALTER COLUMN "instagram" DROP NOT NULL,
+ALTER COLUMN "whatsApp" DROP NOT NULL;

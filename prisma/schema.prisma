@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  hosp      Hosp[]
+  food      Food[]
+  event     Event[]
+}
+
+model Hosp {
+  id          String   @id @default(cuid())
+  title       String
+  whatsApp    String
+  instagram   String
+  createdAt   DateTime @default(now())
+  bedrooms    Int
+  bathroom    Int
+  vacancy     Int
+  serviceArea Boolean
+  kitchen     Boolean
+  description String
+  images      String[]
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Food {
+  id          String   @id @default(cuid())
+  title       String
+  whatsApp    String
+  instagram   String
+  createdAt   DateTime @default(now())
+  type        String
+  wifi        Boolean
+  delivery    Boolean
+  parking     Boolean
+  description String
+  images      String[]
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  whatsApp    String
+  instagram   String
+  createdAt   DateTime @default(now())
+  date        DateTime
+  local       String
+  description String
+  images      String[]
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
