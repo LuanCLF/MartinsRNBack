@@ -9,7 +9,7 @@ const updateEventImages = async (id: string, imageUrl: string) => {
   const post = await getEvent(id);
   if (!post) throw new error("Post not found", 404);
 
-  const exist = post.images.some((image) => image == imageUrl);
+  const exist = post.images.some((image: string) => image == imageUrl);
 
   if(!exist) {
     post.images.push(imageUrl);
@@ -21,7 +21,7 @@ const updadteHospImages = async (id: string, imageUrl: string) => {
   const post = await getHosp(id);
   if (!post) throw new error("Post not found", 404);
 
-  const exist = post.images.some((image) => image == imageUrl);
+  const exist = post.images.some((image: string) => image == imageUrl);
 
   if(!exist) {
     post.images.push(imageUrl);
@@ -33,7 +33,7 @@ const updateFoodImages = async (id: string, imageUrl: string) => {
   const post = await getFood(id);
   if (!post) throw new error("Post not found", 404);
 
-  const exist = post.images.some((image) => image == imageUrl);
+  const exist = post.images.some((image: string) => image == imageUrl);
 
   if(!exist) {
     post.images.push(imageUrl);
