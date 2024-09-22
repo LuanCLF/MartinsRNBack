@@ -4,7 +4,7 @@
   "description": "Backend para uma página web",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/api/index.ts",
+    "start": "node dist/api/index.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/api/index.ts"
