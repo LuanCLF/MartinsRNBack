@@ -23,16 +23,17 @@ const createHospController = async (req: Request, res: Response) => {
     instagram,
   } = req.body;
 
-  if (
-    !title ||
-    !bedrooms ||
-    !bathrooms ||
-    !vacancy ||
-    !serviceArea ||
-    !kitchen ||
-    !description
-  ) {
-    throw new error("Missing required fields", 400);
+  const missingFields = [];
+  if (!title) missingFields.push("title");
+  if (!bedrooms) missingFields.push("bedrooms");
+  if (!bathrooms) missingFields.push("bathrooms");
+  if (!vacancy) missingFields.push("vacancy");
+  if (!serviceArea) missingFields.push("serviceArea");
+  if (!kitchen) missingFields.push("kitchen");
+  if (!description) missingFields.push("description");
+
+  if (missingFields.length > 0) {
+    throw new error(`Missing required fields: ${missingFields.join(", ")}`, 400);
   }
 
   const post = new Hosp(

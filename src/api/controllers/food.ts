@@ -17,9 +17,19 @@ const createFoodController = async (req: Request, res: Response) => {
     instagram,
   } = req.body;
 
-  if (!title || !type || wifi == undefined || delivery == undefined || parking == undefined || !description)  {
-    throw new error("Missing required fields", 400);
+  const missingFields = [];
+  if (!title) missingFields.push("title");
+  if (!type) missingFields.push("type");
+  if (wifi == undefined) missingFields.push("wifi");
+  if (delivery == undefined) missingFields.push("delivery");
+  if (parking == undefined) missingFields.push("parking");
+  if (!description) missingFields.push("description");
+
+  if (missingFields.length > 0) {
+    throw new error(`Missing required fields: ${missingFields.join(", ")}`, 400);
   }
+
+
 
   const post = new Food(
     user.id,

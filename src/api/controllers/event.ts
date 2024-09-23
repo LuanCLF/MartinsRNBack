@@ -7,10 +7,16 @@ const createEventController = async (req: Request, res: Response) => {
   const {user} = req.body;
   const { title, date, local, description, whatsApp, instagram } = req.body;
 
-  if (!title || !date || !local || !description) {
-    throw new error('Missing required fields', 400);
-  }
+  const missingFields = [];
+  if (!title) missingFields.push("title");
+  if (!date) missingFields.push("date");
+  if (!local) missingFields.push("local");
+  if (!description) missingFields.push("description");
 
+  if (missingFields.length > 0) {
+    throw new error(`Missing required fields: ${missingFields.join(", ")}`, 400);
+  }
+  
   const post = new Event(user.id, title, date, local, description, 
     whatsApp ?? '',
     instagram ?? '');
