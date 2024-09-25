@@ -17,7 +17,7 @@ const createEventController = async (req: Request, res: Response) => {
     throw new error(`Missing required fields: ${missingFields.join(", ")}`, 400);
   }
   
-  const post = new Event(user.id, title, date, local, description, 
+  const post = new Event(user.id, title, new Date(date), local, description, 
     whatsApp ?? '',
     instagram ?? '');
 
@@ -48,7 +48,7 @@ async function updateEventController(req: Request, res: Response) {
   const updatedPost: Event = {
     ...post,
     title: title ?? post.title,
-    date: date ?? post.date,
+    date: date ? post.date : new Date(date),
     local: local ?? post.local,
     description: description ?? post.description,
     whatsApp: whatsApp ?? post.whatsApp,
