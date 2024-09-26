@@ -54,13 +54,23 @@ const createHospController = async (req: Request, res: Response) => {
   res.status(201).json(post);
 };
 
-const getAllHospController = async (req: Request, res: Response) => {
+const getAllHospUserController = async (req: Request, res: Response) => {
   const id = req.body.user.id;
   const { page } = req.query;
 
   const skip: number = page ? (parseInt(page as string) - 1) * 10 : 0;
 
-  const posts = await getAll(id, skip, 10);
+  const posts = await getAll(skip, 10, id);
+
+  res.status(200).json(posts);
+};
+
+const getAllHospController = async (req: Request, res: Response) => {
+  const { page } = req.query;
+
+  const skip: number = page ? (parseInt(page as string) - 1) * 10 : 0;
+
+  const posts = await getAll(skip, 10);
 
   res.status(200).json(posts);
 };
@@ -109,4 +119,4 @@ async function deleteHospController(req: Request, res: Response) {
   res.status(204).json();
 }
 
-export { createHospController, getAllHospController, updateHospController, deleteHospController };
+export { createHospController, getAllHospUserController, getAllHospController, updateHospController, deleteHospController };

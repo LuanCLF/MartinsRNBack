@@ -1,5 +1,5 @@
 
-import { Event } from "../domain/post";
+import { Event, PEvent } from "../domain/post";
 import prisma from "./db";
 
 async function createEvent(data: Event): Promise<void> {
@@ -24,7 +24,8 @@ async function getEvent(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
+async function getAll( skip: number, take: number, id?: string) {
+if(id){
     const hosps=  await prisma.event.findMany({
         where: {
             userId: id
@@ -34,6 +35,24 @@ async function getAll(id: string, skip: number, take: number) {
     });
 
     return hosps;
+} else {
+    const event: PEvent[] = await prisma.event.findMany({
+        skip,
+        take,
+        select: {
+            title: true,
+            whatsApp: true,
+            instagram: true,
+            createdAt: true,
+            images: true,
+            date: true,
+            local: true,
+            description: true
+        }
+    });
+
+    return event;
+}
 }
 
 async function deleteEvent(id: string) {

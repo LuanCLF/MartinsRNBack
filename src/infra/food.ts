@@ -1,4 +1,4 @@
-import { Food } from "../domain/post";
+import { Food, PFood } from "../domain/post";
 import prisma from "./db";
 
 async function createFood(data: Food): Promise<void> {
@@ -24,7 +24,8 @@ async function getFood(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
+async function getAll( skip: number, take: number, id?: string): Promise<Food[] | PFood[]> {
+if(id){
     return await prisma.food.findMany({
         where: {
             userId: id
@@ -32,6 +33,26 @@ async function getAll(id: string, skip: number, take: number) {
         skip,
         take
     });
+} else {
+   const food: PFood[] =  await prisma.food.findMany({
+        skip,
+        take,
+        select: {
+            title: true,
+            whatsApp: true,
+            instagram: true,
+            createdAt: true,
+            images: true,
+            description: true,
+            type: true,
+            wifi: true,
+            delivery: true,
+            parking: true
+        }
+    });
+
+    return food;
+}
 }
 
 async function deleteFood(id: string) {

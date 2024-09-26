@@ -1,4 +1,4 @@
-import { Hosp } from "../domain/post";
+import { Hosp, PHosp } from "../domain/post";
 import prisma from "./db";
 
 async function createHosp(data: Hosp): Promise<void> {
@@ -24,16 +24,38 @@ async function getHosp(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
-    return  await prisma.hosp.findMany({
+async function getAll( skip: number, take: number, id?: string): Promise<Hosp[] | PHosp[]> {
+if(id){
+    return await prisma.hosp.findMany({
         where: {
             userId: id
         },
         skip,
         take
     });
-}
+} else {
+   const hosp: PHosp[] =  await prisma.hosp.findMany({
+        skip,
+        take,
+        select: {
+            title: true,
+            whatsApp: true,
+            instagram: true,
+            createdAt: true,
+            images: true,
+            bedrooms: true,
+            bathroom: true,
+            vacancy: true,
+            serviceArea: true,
+            kitchen: true,
+            description: true,
 
+        }
+    });
+
+    return hosp;
+}
+} 
 async function deleteHosp(id: string) {
     await prisma.hosp.delete({
         where: {

@@ -66,7 +66,7 @@ const deleteUserController = async (req: Request, res: Response) => {
 
   await deleteUser(user.id);
 
-  res.status(204).send();
+  res.status(204).json();
 };
 
 export {
