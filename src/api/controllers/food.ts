@@ -48,15 +48,25 @@ const createFoodController = async (req: Request, res: Response) => {
   res.status(201).json(post);
 };
 
-const getAllFoodController = async (req: Request, res: Response) => {
+const getAllFoodUserController = async (req: Request, res: Response) => {
   const id = req.body.user.id;
   const { page } = req.query;
 
   const skip: number = page ? (parseInt(page as string) - 1) * 10 : 0;
 
-  const posts = await getAll(id, skip, 10);
+  const posts = await getAll( skip, 10, id);
 
-  res.json(posts);
+  res.status(200).json(posts);
+};
+
+const getAllFoodController = async (req: Request, res: Response) => {
+  const { page } = req.query;
+
+  const skip: number = page ? (parseInt(page as string) - 1) * 10 : 0;
+
+  const posts = await getAll( skip, 10);
+
+  res.status(200).json(posts);
 };
 
 const updateFoodController = async (req: Request, res: Response) => {
@@ -98,7 +108,7 @@ const deleteFoodController = async (req: Request, res: Response) => {
 
   await deleteFood(id);
 
-  res.status(204).send();
+  res.status(204).json();
 }
 
-export { createFoodController, getAllFoodController, updateFoodController, deleteFoodController };
+export { createFoodController, getAllFoodUserController, getAllFoodController, updateFoodController, deleteFoodController };

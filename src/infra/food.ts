@@ -24,14 +24,21 @@ async function getFood(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
-    return await prisma.food.findMany({
+async function getAll( skip: number, take: number, id?: string) {
+if(id){
+    return  await prisma.food.findMany({
         where: {
             userId: id
         },
         skip,
         take
     });
+} else {
+    return  await prisma.food.findMany({
+        skip,
+        take
+    });
+}
 }
 
 async function deleteFood(id: string) {

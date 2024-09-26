@@ -24,7 +24,8 @@ async function getEvent(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
+async function getAll( skip: number, take: number, id?: string) {
+if(id){
     const hosps=  await prisma.event.findMany({
         where: {
             userId: id
@@ -34,6 +35,12 @@ async function getAll(id: string, skip: number, take: number) {
     });
 
     return hosps;
+} else {
+    return  await prisma.event.findMany({
+        skip,
+        take
+    });
+}
 }
 
 async function deleteEvent(id: string) {

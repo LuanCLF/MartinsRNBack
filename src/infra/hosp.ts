@@ -24,7 +24,8 @@ async function getHosp(id: string) {
     });
 }
 
-async function getAll(id: string, skip: number, take: number) {
+async function getAll( skip: number, take: number, id?: string) {
+if(id){
     return  await prisma.hosp.findMany({
         where: {
             userId: id
@@ -32,6 +33,12 @@ async function getAll(id: string, skip: number, take: number) {
         skip,
         take
     });
+} else {
+    return  await prisma.hosp.findMany({
+        skip,
+        take
+    });
+}
 }
 
 async function deleteHosp(id: string) {
