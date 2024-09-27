@@ -14,6 +14,9 @@ import { imageUploadController } from "./controllers/image";
 
 const routes = express();
 
+routes.get("/", (req, res) => {
+  res.status(200).json({message: "Server on"})
+});
 routes.post("/user", createUserController);
 routes.post("/login", loginUserController);
 
